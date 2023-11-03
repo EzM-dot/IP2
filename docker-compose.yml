@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  backend:
+    #build: ./backend
+    image: dmk92/ip2_backend:1.0.0.0
+    expose:
+      - 5000
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/src:/application/server/src
+    command: npm run start
+    networks:
+      - yolo-network
+
+  client:
+    #build: ./client
+    image: dmk92/ip2_client:latest
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client/src:/application/client/src
+      - ./client/public:/application/client/public
+    command: npm run start
+    networks:
+      - yolo-network
+networks:
+  yolo-network:
+    driver: bridge
